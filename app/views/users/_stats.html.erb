@@ -1,0 +1,13 @@
+<% user ||= current_user %>
+<div class="stats">
+  フォロー数:
+    <strong id="followed" class="stat">
+      <%= user.followed.count %>
+    </strong>
+
+  フォロワー数：
+    <strong id="follower" class="stat">
+      <%= user.follower.count %>
+    </strong>
+
+</div>
