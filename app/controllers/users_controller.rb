@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       render "edit"
     end
   end
-  
+
   def followed
     @user = User.find_by(id: params[:id])
     @users = @user.followed

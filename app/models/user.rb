@@ -6,12 +6,9 @@ class User < ApplicationRecord
 
   has_many :books
   attachment :profile_image, destroy: false
-  has_many :follower, class_name: "Relationship",
-                      foreign_key: "follower_id",
-                      dependent: :destroy # フォローしている
-  has_many :followed, class_name: "Relationship",
-                      foreign_key: "followed_id",
-                      dependent: :destroy # フォローされている
+
+  has_many :follower, class_name: "Relationship",foreign_key: "follower_id",dependent: :destroy # フォローしている
+  has_many :followed, class_name: "Relationship",foreign_key: "followed_id",dependent: :destroy # フォローされている
   has_many :follower_user, through: :followed, source: :follower #フォローしている人
   has_many :following_user, through: :follower, source: :followed #フォローされている人
 
@@ -24,7 +21,8 @@ class User < ApplicationRecord
   end
 
   def unfollow(user_id) #フォローを外す
-    follower.find_by(followed_id: user_id).destroy
+    relationship = self.follower.find_by(followed_id: user_id)
+    relationship.destroy if relationship
   end
 
   def following?(user) #すでにフォローしているかの確認
